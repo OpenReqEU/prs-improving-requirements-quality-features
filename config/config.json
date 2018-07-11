@@ -1,0 +1,45 @@
+{
+    "lemmatizer": {
+        "morphit_dict": "data/dictionaries/morphit_dic.pkl", 
+	"service_address":"",
+        "proxy_setup": null, 
+        "fast": false, 
+        "chunk_size": 300
+    }, 
+    "directories": {
+        "dataDir": "data", 
+        "configDir": "config"
+    }, 
+    "internals": {
+        "errors": "config/internal_server_errors_dictionary.json"
+    }, 
+    "dictionaries": {
+        "high_scores": "data/dictionaries/high_scores.txt", 
+        "low_scores": "data/dictionaries/low_scores.txt", 
+        "avg_scores": "data/dictionaries/average_scores.txt", 
+        "sections": "data/dictionaries/dictionary_sections.txt"
+    }, 
+    "ske": {
+        "dbpediaspotlight_url_en": "http://172.31.32.3:80/rest/annotate", 
+        "pm_lower_min_len": 4, 
+        "dbp_confidence": 0.6, 
+        "use_proxy": false, 
+        "dbpediaspotlight_url_it": "http://172.31.32.3:80/rest/annotate"
+    }, 
+    "dummyInput": {
+        "docFile": "example_tender1_confidential.docx"
+    }, 
+    "endpoints": {
+        "lemmatizer": "/lemmatizer/en", 
+        "ENGWS": "", 
+        "endpointHeaders": "{'Accept': 'application/json'}", 
+        "entities_extractor": "/keywords/supervised/en", 
+        "DBpediaSpotlight": "http://172.31.32.2:80/rest/annotate", 
+        "uke": "/keywords/unsupervised/regex"
+    }, 
+    "baseAddress": "http://localhost:5007/api_t_33", 
+    "numParsedBlocks" : 16,
+    "spacyModels": {
+        "en": "en_core_web_sm"
+    }
+}

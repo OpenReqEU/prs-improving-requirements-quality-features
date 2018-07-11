@@ -1,0 +1,58 @@
+{
+    "709": {
+        "status": 709, 
+        "code": "INVALID_ENDPOINT", 
+        "description": "Invalid endpoint. See documentation."
+    }, 
+    "708": {
+        "status": 708, 
+        "code": "FILE_NOT_FOUND", 
+        "description": "Invalid file selected."
+    }, 
+        "707": {
+        "status": 707, 
+        "code": "INVALID_JSON", 
+        "description": "Invalid input JSON."
+    }, 
+    
+    "706": {
+        "status": 706, 
+        "code": "INVALID_LANGUAGE", 
+        "description": "Invalid language selected."
+    }, 
+    "705": {
+        "status": 705, 
+        "code": "MISSING_INPUT", 
+        "description": "Input null or not found."
+    }, 
+    "704": {
+        "status": 704, 
+        "code": "MODEL_NOT_FOUND", 
+        "description": "Model null or not found."
+    }, 
+    "703": {
+        "status": 703, 
+        "code": "VARIABLE_VALUE_NOT_ACCEPTABLE", 
+        "description": "Variable value is not acceptable."
+    }, 
+    "702": {
+        "status": 702, 
+        "code": "DOCUMENT_NOT_FOUND", 
+        "description": "Document null or not found."
+    }, 
+    "701": {
+        "status": 701, 
+        "code": "DOCUMENT_NULL", 
+        "description": "Document value given is void."
+    },
+    "601": {
+        "status": 601, 
+        "code": "WAIT_CONFIRMATION_EMAIL", 
+        "description": "We are elaborating your request. You will receive an email as soon as it will be done."
+    },
+    "600": {
+        "status": 600, 
+        "code": "OK", 
+        "description": "Application run normally."
+    }
+}
