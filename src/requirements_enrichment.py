@@ -25,7 +25,7 @@ def dbpedia_entity_types(list_of_entities):
 	dict_type = {}
 	
 	for c_entity in list_of_entities:
-		sparql = SPARQLWrapper("http://sparql.org/sparql")
+		sparql = SPARQLWrapper("http://dbpedia.org/sparql")
 		prefix = """
 PREFIX        wd:  <http://www.wikidata.org/entity/>
 PREFIX       wdt:  <http://www.wikidata.org/prop/direct/>
@@ -44,12 +44,6 @@ PREFIX       dbp:  <http://dbpedia.org/property/>
 """
 
 		dbp_query = prefix + """
-SELECT DISTINCT        ?x ?s 
-WHERE 
-{ 
-	SERVICE <http://dbpedia.org/sparql>
-	{ 
-		
 SELECT DISTINCT ?x ?s
 {
 			select ?s ?x where{
@@ -57,8 +51,7 @@ SELECT DISTINCT ?x ?s
 			?x dct:subject	?s.
 	}
 }
-	}
-}
+
 """
 		sparql.setQuery( dbp_query.encode("utf-8").decode("unicode_escape") )
 		sparql.setReturnFormat("json")
