@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+    spotlight:
+        image: dbpedia/spotlight-english:1.0
+        ports:
+          - 2222:80
+        stdin_open: true
+        entrypoint: /bin/spotlight.sh
+        container_name: spotlight
+        networks:
+            db_req_bridge:
+                ipv4_address: 172.31.32.3
+        
+        
+    openreq_t_33:
+        build: .
+        ports:
+          - 10602:5007
+        depends_on:
+          - spotlight
+        container_name: openreq_t_33
+        networks:
+            db_req_bridge:
+                ipv4_address: 172.31.32.2
+
+
+networks:
+    db_req_bridge:
+        driver: bridge
+        ipam:
+            config:
+              - subnet: 172.31.38.152/20
