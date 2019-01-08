@@ -23,9 +23,9 @@ import requests
 import time
 import os
 import os.path
-
-
-
+import traceback
+import sys
+import pdb
 app = Flask(__name__)
 swagger = Swagger(app)
 cors = CORS(app)
@@ -292,6 +292,7 @@ def main():
     head, tail = os.path.split(file_word)
     file_txt = path +tail +'.txt'
     data = {'numParagraph' : num_paragraph}
+
     files = [('file', (file_txt, open(file_txt, 'rb'), 'application/octet')),
              ('data', ('data', json.dumps(data), 'application/json'))]
     out_2 = requests.post(baseAddress + "/parsing/segmentation", files=files)
@@ -391,14 +392,17 @@ def convert_document():
         f.save(path+f.filename)
        
     #parse with tika  
+    print "CHECK PARSING"
     try:
+        pdb.set_trace()
         parsed = parser.from_file(path+f.filename)      
-    except: 
-        return json.dumps({'content': {}, 'error' : server_errors['705'] }), 500, {'Content-Type': 'application/json; charset=utf-8'} 
-    
+    except Exception, e: 
+        return json.dumps({'content': 'PARSING ERROR', 'error' : server_errors['705'] }), 500, {'Content-Type': 'application/json; charset=utf-8'} 
+
+    print "downloaded"
     #prsed text       
     output = parsed["content"]
-
+    print output
     #save parsed document in txt file 
     with open(path+f.filename+".txt", "wb") as text_file:
         text_file.write(output.encode('utf-8'))

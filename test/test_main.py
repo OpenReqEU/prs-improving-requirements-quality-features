@@ -24,14 +24,14 @@ import os
 #%%#########################################################
 ################ Input data ################################  
 ############################################################
-endpoint =  "http://127.0.0.1:5007/api_t_33/uploader"
+endpoint =  "http://127.0.0.1:10602/api_t_33/uploader"
 
 path='../data/'
-file_word = 'example_tender1_confidential.docx'
-#file_word = 'prova.docx'
+#file_word = 'example_tender1_confidential.docx'
+file_word = 'test.pdf'
 filename = path+file_word
 
-data = {'numParagraph':15}
+data = {'numParagraph':1}
 
 #%%#########################################################
 ################    Test    ################################  

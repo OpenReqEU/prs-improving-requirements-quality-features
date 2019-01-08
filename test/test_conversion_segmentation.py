@@ -27,18 +27,18 @@ import os
 ############################################################
 
 path1='../data/'
-file_word1 = 'example_tender1_confidential.docx'
+file_word1 = 'EVOLUTION.DOCX'
 filename1 = path1+file_word1
 
 #path2 = '../output/'
-path2='../data/unprocessed/'
-file_word2 = 'example_tender1_confidential.txt'
+path2='../data/processed/'
+file_word2 = 'EVOLUTION.txt'
 filename2 = path2+file_word2
 
 
 
-endpoint1 =  "http://127.0.0.1:5007/api_t_33/parsing/conversion/doc"
-endpoint2 =  "http://127.0.0.1:5007/api_t_33/parsing/segmentation"
+endpoint1 =  "http://127.0.0.1:10602/api_t_33/parsing/conversion/doc"
+endpoint2 =  "http://127.0.0.1:10602/api_t_33/parsing/segmentation"
 
 
 
