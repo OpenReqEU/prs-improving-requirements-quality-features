@@ -1,3 +1,5 @@
+# OpenReq Improving requirements quality by features
+
 This plugin was created as a result of the OpenReq project funded by the European Union Horizon 2020 Research and Innovation programme under grant agreement No 732463.
 
 The following technologies are used:
