@@ -61,7 +61,7 @@ Go inside the `task_3_3` folder and generate the `openreq` container via `sudo d
 #### How to run docker container
 First generate bridge to connect containers
 sudo docker network create [name][subnet]
-(**use**: "sudo docker network create db_req_bridge --subnet 172.31.38.152/20")
+(**use**: `sudo docker network create db_req_bridge --subnet 172.31.38.152/20`)
 
 specify docker run options
 sudo docker run [net][name][ip][port][container][entrypoint]
