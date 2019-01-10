@@ -29,7 +29,7 @@
         "dbpediaspotlight_url_it": "http://localhost:42000/rest/annotate"
     }, 
     "dummyInput": {
-        "docFile": "example_tender1_confidential.docx"
+        "docFile": "dummy.docx"
     }, 
     "endpoints": {
         "lemmatizer": "/lemmatizer/en", 
