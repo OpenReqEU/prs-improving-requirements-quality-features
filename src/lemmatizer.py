@@ -173,11 +173,12 @@ class Lemmatizer(object):
         pickle.dump( self.morphit_dict, open( dict_filename, "wb" ) )
 
         
-    def load_morphit_dict(self, dict_filename):
+    def load_morphit_dict(self, dict_filename, decoder_POS_file):
         """
         This function loads decoded morphit dictonary in pickle format. 
         """
-        self.morphit_dict = pickle.load( open( dict_filename, 'rb' ) )
+        self.process_morphit( dict_filename, decoder_POS_file )
+        #self.morphit_dict = pickle.load( open( dict_filename, 'rb' ) )
 
         
     @staticmethod    

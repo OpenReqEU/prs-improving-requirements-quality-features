@@ -25,7 +25,7 @@ import os
 import os.path
 import traceback
 import sys
-import pdb
+
 app = Flask(__name__)
 swagger = Swagger(app)
 cors = CORS(app)
@@ -62,7 +62,8 @@ def load_data():
         dict_sect_raw = dict_sect_text.read()
     dict_sect = dict_sect_raw.split('\n')
     wordlist_list.append(dict_sect)
-
+    
+    print("Loading scores...")
     with open(config_parameters["dictionaries"]["high_scores"]) as high_scores_text:
         high_scores_raw = high_scores_text.read()
     high_scores = high_scores_raw.split('\r\n') 
@@ -76,6 +77,7 @@ def load_data():
     server_errors = json.load(open(config_parameters["internals"]["errors"],'r'))
 
     #lemmatizer 
+    print("Loading lemmatizer...")
     global lem
     lem = Lemmatizer(lang='en', 
                      fast=config_parameters['lemmatizer']['fast'],
@@ -84,7 +86,7 @@ def load_data():
                      service_address =config_parameters['lemmatizer']['service_address'],
                      stopwords_list=None,
                      pos_list=None)
-    lem.load_morphit_dict(dict_filename=config_parameters['lemmatizer']['morphit_dict'])
+    lem.load_morphit_dict(dict_filename=config_parameters['lemmatizer']['morphit_dict'], decoder_POS_file=config_parameters['lemmatizer']['decoder_pos'])
 
     #textcleaner
     global tc
@@ -96,9 +98,9 @@ def load_data():
 
 
 
-################################################
-#####  Upload File and call Orchestrator #######
-################################################
+###########################
+#####  Orchestrator #######
+###########################
 @app.route('/api_t_33/uploader', methods = ['GET','POST'])
 def upload_file_by_name():
     
@@ -180,14 +182,12 @@ def upload_file_by_name():
 
         data = {'documentName':path+complex_name, 'numParagraph': num_paragraph}
       
-        #rest service entrypoint
-        output = requests.post(baseAddress + "/entrypoint", data=json.dumps(data))
-        prettify_enriched_paragraphs = output.json().get('content')
-            
+        output = start_process(data)
+        prettify_enriched_paragraphs = json.loads(output[0]).get('content')
       
         #remove files 
         try:   
-            os.remove(path+complex_name+'.txt')     
+            os.remove(path+complex_name)     
         except OSError:
             print ("Error: file txt not found")  
     else:
@@ -196,17 +196,7 @@ def upload_file_by_name():
     return json.dumps({'content': prettify_enriched_paragraphs, 'error': server_errors["600"] }), 200, {'Content-Type': 'application/json; charset=utf-8'}
     #return json.dumps({'content': {'enrichedParagraphs':enriched_paragraphs}, 'error': server_errors["600"] }), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
-
-
-
-
-################################################
-######## Orchestrator ##########################
-################################################
-@app.route("/api_t_33/entrypoint", methods=['POST'])
-def main():
-
-
+def start_process(content = None):
     """
         Get a document name, return enriched dict of blocks.
         ---
@@ -259,10 +249,14 @@ def main():
            
 
     """
+    path = os.getcwd()+'/'+ config_parameters['directories']['outputDir'] + '/'  
+    # input json    
+    json_input = None
+    if content is None:
+        json_input = request.get_json(force=True)
+    else:
+        json_input = content	
 
-    # input json
-    json_input = request.get_json(force=True)
-  
     # check validity of input json
     if isinstance(json_input, dict) == False:  
         return json.dumps({'content': {}, 'error' : server_errors['707'] }), 500, {'Content-Type': 'application/json; charset=utf-8'} 
@@ -280,44 +274,44 @@ def main():
     if isinstance(num_paragraph,int) == False:
         return json.dumps({'content': {}, 'error' : server_errors['702'] }), 500, {'Content-Type': 'application/json; charset=utf-8'}
     
-   
-    
+    #although each service is available as microservices, we internally call them as function
     #step 1
-    out_1 = requests.post(baseAddress + "/parsing/conversion/doc", files={'file': open(file_word,'rb')})
-    
+    out_1 = convert_document(file_word)
     
     #step 2 
-    path = os.getcwd()+'/output/'
-    #path = os.getcwd()+'/'+ config_parameters['directories']['outputDir'] + '/'
     head, tail = os.path.split(file_word)
-    file_txt = path +tail +'.txt'
+    file_txt = path + "/"+ tail +'.txt'
     data = {'numParagraph' : num_paragraph}
 
-    files = [('file', (file_txt, open(file_txt, 'rb'), 'application/octet')),
-             ('data', ('data', json.dumps(data), 'application/json'))]
-    out_2 = requests.post(baseAddress + "/parsing/segmentation", files=files)
-    list_of_blocks =  out_2.json().get('content')
+    #files = [('file', (file_txt, open(file_txt, 'rb'), 'application/octet')),
+    #         ('data', ('data', json.dumps(data), 'application/json'))]
+    #out_2 = requests.post(baseAddress + "/parsing/segmentation", files=files)
     
-
+    out_2 = None
+    #out_2 = requests.post(baseAddress + "/parsing/segmentation", files=files)
+    out_2 = text_segmentation(json.loads(out_1[0])["content"], data)
+    list_of_blocks = json.loads(out_2[0]).get('content')
+    
     #step 3
     # #transform json into structured_dict:
     data = {'listOfBlocks':list_of_blocks}
-    out_3 = requests.post(baseAddress + '/parsing/to_dict', data=json.dumps(data))
-    structured_dict = out_3.json().get('content')
+    #out_3 = requests.post(baseAddress + '/parsing/to_dict', data=json.dumps(data))
+    out_3 = json_to_dict(data)
+    structured_dict = json.loads(out_3[0]).get('content')
         
-
     # step 4
     # #enrich json (technically enrich a dict obtained from json )  
     data = {'structuredDictList': structured_dict}
-    out_4 = requests.post(baseAddress + "/parsing/enrich", data=json.dumps(data))
-    enriched_paragraphs = out_4.json().get('content')
+    #out_4 = requests.post(baseAddress + "/parsing/enrich", data=json.dumps(data))
+    out_4 = enricher(data)
+    enriched_paragraphs = json.loads(out_4[0]).get('content')
     
-
     # step 5
     #prettify enched dict    
     data = {'enrichedDictList': enriched_paragraphs}
-    out_5 = requests.post(baseAddress + "/parsing/enrich/prettify", data=json.dumps(data))
-    prettify_enriched_paragraphs = out_5.json().get('content')
+    #out_5 = requests.post(baseAddress + "/parsing/enrich/prettify", data=json.dumps(data))
+    out_5 = get_output_json(data)
+    prettify_enriched_paragraphs = json.loads(out_5[0]).get('content')
 
 
     return json.dumps({'content': prettify_enriched_paragraphs, 'error': server_errors["600"] }), 200, {'Content-Type': 'application/json; charset=utf-8'}
@@ -329,10 +323,9 @@ def main():
 ################################################
 
 ### Step 1
-@app.route('/api_t_33/parsing/conversion/doc', methods=['GET','POST']) 
-def convert_document():
-
-     
+@app.route('/api_t_33/parsing/conversion/doc', methods=['POST']) 
+def convert_document(filename):
+	
     """
         Parse document with tika
         Get a document name, return parsed text.
@@ -383,46 +376,38 @@ def convert_document():
            
 
     """
-    path = os.getcwd()+'/output/'
-    #path = os.getcwd()+'/'+ config_parameters['directories']['outputDir'] + '/'
-    if request.method == 'POST':
+
+    path = os.getcwd()+'/'+ config_parameters['directories']['outputDir'] + '/'    
+    if filename is None:
         f = request.files['file']
-        #complex_name = str(time.time())+f.filename
-        #f.save(path+complex_name)
         f.save(path+f.filename)
-       
     #parse with tika  
-    print "CHECK PARSING"
     try:
-        pdb.set_trace()
-        parsed = parser.from_file(path+f.filename)      
+        if filename is None:
+            parsed = parser.from_file(path+f.filename)      
+        else:
+            parsed = parser.from_file(filename) 
     except Exception, e: 
         return json.dumps({'content': 'PARSING ERROR', 'error' : server_errors['705'] }), 500, {'Content-Type': 'application/json; charset=utf-8'} 
 
-    print "downloaded"
-    #prsed text       
+    #parsed text       
     output = parsed["content"]
     print output
-    #save parsed document in txt file 
-    with open(path+f.filename+".txt", "wb") as text_file:
-        text_file.write(output.encode('utf-8'))
 
     #remove uploaded docx file 
-    try:
-        os.remove(path+f.filename)
-    except OSError:
-        print ("Error: file docx not found")   
+    if filename is None:
+		try:
+			os.remove(path+f.filename)
+		except OSError:
+			print ("Error while removing temporary docx file")   
 
     #output
     return json.dumps({'content':output, 'error' : server_errors['600'] }), 200, {'Content-Type': 'application/json; charset=utf-8'} 
 
 
-
-
-
 ### Step 2
-@app.route('/api_t_33/parsing/segmentation', methods=['GET','POST']) 
-def text_segmentation():
+@app.route('/api_t_33/parsing/segmentation', methods=['POST']) 
+def text_segmentation(content = None, data = None):
 
     
     """
@@ -484,24 +469,31 @@ def text_segmentation():
                       type: string  
            
 
-    """
+    """  
+    #path = os.getcwd()+'/output/'
+    path = os.getcwd()+'/'+ config_parameters['directories']['outputDir'] + '/'
     
-    path = os.getcwd()+'/output/'
-    #path = os.getcwd()+'/'+ config_parameters['directories']['outputDir'] + '/'
-    if request.method == 'POST':
+    input_json = None
+    num_paragraph = None
+    if (content == None):
         f = request.files['file']
         try:         
             input_json = json.load(request.files['data'])  
             num_paragraph = input_json.get('numParagraph')
         except:
             num_paragraph = config_parameters['numParsedBlocks']
-
-
+    else:
+            input_json = content
+            try:
+                num_paragraph = data.get('numParagraph')
+            except:
+                num_paragraph = config_parameters['numParsedBlocks']
+	
     #apply segmentation
-    try:
-        paragraph_list = preproc_seg.parse(f)
-    except:
-        return json.dumps({'content': {}, 'error' : server_errors['702'] }), 500, {'Content-Type': 'application/json; charset=utf-8'}
+    #try:
+    paragraph_list =preproc_seg.parse([el for el in input_json.replace("\n\n", "\n").split("\n") if el != ""])
+    #except:
+    #return json.dumps({'content': {}, 'error' : server_errors['702'] }), 500, {'Content-Type': 'application/json; charset=utf-8'}
 
     #cut list 
     #num_paragraph = 15
@@ -519,13 +511,12 @@ def text_segmentation():
         REST_STATUS = 200
     else:
         REST_STATUS = 500
-   
     return output, REST_STATUS, {'Content-Type': 'application/json; charset=utf-8'}  
  
 
 ### Step 3   
 @app.route('/api_t_33/parsing/to_dict', methods=['POST'])    
-def json_to_dict():
+def json_to_dict(content = None):
 
     """
         From json to a structered dict.
@@ -586,8 +577,11 @@ def json_to_dict():
    
 
     # per strutturare il file del tipo 'json_out.json' in un dizionario che terremo ed eventualmente arrichirremo
-
-    json_input = request.get_json(force=True)
+    json_input = None
+    if content is None:
+        json_input = request.get_json(force=True)
+    else:
+        json_input = content
    
     # check validity of input json
     if isinstance(json_input, dict) == False:  
@@ -618,7 +612,7 @@ def json_to_dict():
 
 ### Step 4
 @app.route("/api_t_33/parsing/enrich", methods=['POST'])
-def enricher():
+def enricher(content = None):
    
     """
         Enricher.
@@ -684,8 +678,11 @@ def enricher():
     param_dbpedia_dict['useProxy'] = config_parameters['ske']['use_proxy']
     param_dbpedia_dict['confidence'] = 0.4
 
-       
-    json_input = request.get_json(force=True)
+    json_input = None       
+    if content is None:
+        json_input = request.get_json(force=True)
+    else:
+        json_input = content
     
     # check validity of input json
     if isinstance(json_input, dict) == False:  
@@ -697,14 +694,14 @@ def enricher():
          return json.dumps({'content': {}, 'error' : server_errors['702'] }), 500, {'Content-Type': 'application/json; charset=utf-8'} 
 
     enriched_dicts_list = []
-      
+
     try:
         for paragraph_dict in structured_dict_list:
             paragraph_dict = preproc_enrich.enrich(paragraph_dict, wordlist_list, verb_arguments_parser,lem,tc,param_dbpedia_dict)
             enriched_dicts_list.append(paragraph_dict)
     except:
         return json.dumps({'content': {}, 'error' : server_errors['705'] }), 500, {'Content-Type': 'application/json; charset=utf-8'} 
- 
+
     status = 600
     error = server_errors[str(status)]
     
@@ -719,7 +716,7 @@ def enricher():
 
 ### Step 5
 @app.route('/api_t_33/parsing/enrich/prettify', methods=['POST'])      
-def get_output_json():
+def get_output_json(content = None):
 
 
     """
@@ -780,7 +777,11 @@ def get_output_json():
     
     json_schema = []
     
-    json_input = request.get_json(force=True)
+    json_input = None       
+    if content is None:
+        json_input = request.get_json(force=True)
+    else:
+        json_input = content
     
     # check validity of input json
     if isinstance(json_input, dict) == False:  
@@ -1420,4 +1421,4 @@ def parsing_formal_metrics():
 
     
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5007, debug=False, use_reloader=True)
+    app.run(host='0.0.0.0', port=5008, debug=False, use_reloader=True, threaded=True)

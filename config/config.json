@@ -1,6 +1,7 @@
 {
     "lemmatizer": {
-        "morphit_dict": "data/dictionaries/morphit_dic.pkl", 
+        "morphit_dict": "data/dictionaries/morph-it_048_utf8.txt", 
+        "decoder_pos": "data/dictionaries/OpenNLP_Morphit_POS_decoder.csv",
 	"service_address":"",
         "proxy_setup": null, 
         "fast": false, 
@@ -8,7 +9,8 @@
     }, 
     "directories": {
         "dataDir": "data", 
-        "configDir": "config"
+        "configDir": "config",
+        "outputDir": "output"
     }, 
     "internals": {
         "errors": "config/internal_server_errors_dictionary.json"
@@ -20,7 +22,7 @@
         "sections": "data/dictionaries/dictionary_sections.txt"
     }, 
     "ske": {
-        "dbpediaspotlight_url_en": "http://localhost:42001/rest/annotate", 
+        "dbpediaspotlight_url_en": "http://172.31.32.3:80/rest/annotate", 
         "pm_lower_min_len": 4, 
         "dbp_confidence": 0.6, 
         "use_proxy": false, 
@@ -37,9 +39,9 @@
         "DBpediaSpotlight": "http://localhost:42001/rest/annotate", 
         "uke": "/keywords/unsupervised/regex"
     }, 
-    "baseAddress": "http://localhost:5007/api_t_33", 
+    "baseAddress": "http://localhost:5008/api_t_33", 
     "numParsedBlocks" : 16,
     "spacyModels": {
-        "en": "en_core_web_sm"
+        "en": "en"
     }
 }

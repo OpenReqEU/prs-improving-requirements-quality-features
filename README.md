@@ -8,7 +8,8 @@ The following technologies are used:
 * SPARQL Language (https://www.w3.org/TR/rdf-sparql-query/)
 * Spacy (https://spacy.io/)
 * PyOrient (http://www.orientdb.com)
-* Pyphen
+* Pyphen (https://pypi.org/project/Pyphen/)
+* Morph_IT (https://github.com/giodegas/morphit-lemmatizer/tree/master/master)
 
 ## Public APIs
 
@@ -65,7 +66,7 @@ sudo docker network create [name][subnet]
 specify docker run options
 sudo docker run [net][name][ip][port][container][entrypoint]
 (**use**: `sudo docker run --net db_req_bridge -i --name db --ip 172.31.32.3 -p 2222:80  english_spotlight spotlight.sh`)
-(**use**: `sudo docker run --net db_req_bridge -it --name req --ip 172.31.32.2 -p 10602:5007 openreq_t_33`)
+(**use**: `sudo docker run --net db_req_bridge -it --name req --ip 172.31.32.2 -p 10602:5008 openreq_t_33`)
 
 #### Appendix:
  ensure to change IP:PORT in `config.json` of `app.py` if -- and only **if** -- other IP/ports are used for the bridge

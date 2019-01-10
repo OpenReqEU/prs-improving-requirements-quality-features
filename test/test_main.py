@@ -27,8 +27,8 @@ import os
 endpoint =  "http://127.0.0.1:10602/api_t_33/uploader"
 
 path='../data/'
-#file_word = 'example_tender1_confidential.docx'
-file_word = 'test.pdf'
+file_word = 'example_tender1_confidential.docx'
+#file_word = 'test.pdf'
 filename = path+file_word
 
 data = {'numParagraph':1}
