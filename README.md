@@ -70,7 +70,7 @@ sudo docker run [net][name][ip][port][container][entrypoint]
 
 ## How to run the Microservice
 The Microservice has one entrypoint at the position
-`http://http://217.172.12.199:10602/api_7_33/upoader`
+`http://217.172.12.199:10602/api_7_33/upoader`
 
 with the following code:
 
@@ -80,7 +80,7 @@ files = [
     ('file', (filename, open(filename, 'rb'), 'application/octet')),
     ('data', ('data', json.dumps(data), 'application/json'))
 ]
-response = requests.post(endpoint, files=files)`
+response = requests.post("http://217.172.12.199:10602/api_7_33/upoader", files=files)`
 ```
 
 being filename the name of the file to be loaded.
