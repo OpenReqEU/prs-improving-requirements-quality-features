@@ -324,7 +324,7 @@ def start_process(content = None):
 
 ### Step 1
 @app.route('/api_t_33/parsing/conversion/doc', methods=['POST']) 
-def convert_document(filename):
+def convert_document(filename = None):
 	
     """
         Parse document with tika
@@ -420,7 +420,7 @@ def text_segmentation(content = None, data = None):
           - application/json
         parameters:
           - in: formData
-            name: upfile
+            name: file
             type: file
             description: The file to upload.
             required: true   
@@ -478,8 +478,10 @@ def text_segmentation(content = None, data = None):
     if (content == None):
         f = request.files['file']
         try:         
-            input_json = json.load(request.files['data'])  
-            num_paragraph = input_json.get('numParagraph')
+            param_json = request.files["data"]
+            f = request.files['file']
+            input_json = f.read()
+            num_paragraph = json.load(param_json)["numParagraph"]
         except:
             num_paragraph = config_parameters['numParsedBlocks']
     else:
@@ -909,7 +911,7 @@ def parsing_lemmatizer(extr_type=None):
     lem.lang=language
    
     json_input = request.get_json(force=True)
-   
+
     # check validity of input json
     if isinstance(json_input, dict) == False:  
         return json.dumps({'content': {}, 'error' : server_errors['707'] }), 500, {'Content-Type': 'application/json; charset=utf-8'} 

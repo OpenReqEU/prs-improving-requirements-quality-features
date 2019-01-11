@@ -27,11 +27,11 @@ import os
 endpoint =  "http://127.0.0.1:10602/api_t_33/uploader"
 
 path='../data/'
-file_word = 'example_tender1_confidential.docx'
+file_word = 'prova_whales.docx'
 #file_word = 'test.pdf'
 filename = path+file_word
 
-data = {'numParagraph':1}
+data = {'numParagraph':15}
 
 #%%#########################################################
 ################    Test    ################################  
@@ -52,5 +52,9 @@ files = [
 
 #response = requests.post(endpoint, files={'file': open(filename,'rb')})
 response = requests.post(endpoint, files=files)
-print(response.content)
+response = response.json()
+assert isinstance(response["content"], list) and len(response["content"]) > 0
+
+
+print(response)
                  
