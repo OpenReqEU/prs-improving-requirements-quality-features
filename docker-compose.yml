@@ -16,7 +16,7 @@ services:
     openreq_t_33:
         build: .
         ports:
-          - 10602:5007
+          - 10602:5008
         depends_on:
           - spotlight
         container_name: openreq_t_33
