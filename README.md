@@ -16,7 +16,7 @@ The following technologies are used:
 The API is documented by using Swagger2:
 http://217.172.12.199:10602/apidocs/
 
-## What the microservices do
+## What the microservice does
 
 We aim to carry out a platform which may help to:
 
@@ -44,7 +44,7 @@ The workflow is based on the following steps:
 3) Paragraph enrichment
 4) Production of OpenReq Ontology
 
-## How to use docker containers
+## How to install
 
 ### Using `docker-compose up`
 Make sure that `docker-compose` is [installed](https://docs.docker.com/compose/install/) (not included in normal docker installation)! Then go to the root folder of task_3_3 and type `docker-compose up`. Docker will then automatically build and run the two containers (`spotlight` and `openreq_t_33`). Also after building, the containers can be run at any time by `docker-compose up`.
@@ -68,8 +68,9 @@ sudo docker run [net][name][ip][port][container][entrypoint]
 (**use**: `sudo docker run --net db_req_bridge -i --name db --ip 172.31.32.3 -p 2222:80  english_spotlight spotlight.sh`)
 (**use**: `sudo docker run --net db_req_bridge -it --name req --ip 172.31.32.2 -p 10602:5008 openreq_t_33`)
 
-## How to run the Microservice
-The Microservice has one entrypoint at the position
+## How to use
+The platform comes with a set of micrososervices that are internally called by a unique entrypoint (/uploader). Therefore, altohugh all microservices have been documented, only the `/uploader` endpoint is responsible of making 
+the whole workflow running. Therefore, the Microservice has one entrypoint at the position:
 `http://217.172.12.199:10602/api_7_33/upoader`
 
 with the following code:
@@ -87,12 +88,18 @@ being filename the name of the file to be uploaded. The user should pass a docum
 The full processing stage may require several minutes, depending on the infrastructure performance and the size of the document to be uploaded. No GUI is provided (a json-like output is provided, according to OpenReq Ontology). 
 The output is compliant to OpenReq JSON structure.
 
+## Note for developers
+None
+
+## Sources
+None
+
 #### Appendix:
  ensure to change IP:PORT in `config.json` of `app.py` if -- and only **if** -- other IP/ports are used for the bridge
 e.g. from "http://localhost:42001/rest/annotate", " to "http://172.31.37.91:11111/rest/annotate"
 
 ## How to contribute
-See OpenReq project contribution link:[guidelines]
+See OpenReq project contribution link: [guidelines](https://github.com/OpenReqEU/OpenReq/blob/master/CONTRIBUTING.md)
 
 ## License
 Free use of this software is granted under the terms of the EPL version 2 (EPL2.0).

@@ -33,7 +33,6 @@
     }, 
     "endpoints": {
         "lemmatizer": "/lemmatizer/en", 
-        "ENGWS": "http://193.109.207.65:15024/nlp", 
         "endpointHeaders": "{'Accept': 'application/json'}", 
         "entities_extractor": "/keywords/supervised/en", 
         "DBpediaSpotlight": "http://localhost:42001/rest/annotate", 
