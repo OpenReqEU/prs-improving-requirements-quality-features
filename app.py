@@ -25,7 +25,8 @@ import os
 import os.path
 import traceback
 import sys
-
+#from IPython import embed
+#from werkzeug.utils import secure_filename
 app = Flask(__name__)
 swagger = Swagger(app)
 cors = CORS(app)
@@ -101,8 +102,8 @@ def load_data():
 ###########################
 #####  Orchestrator #######
 ###########################
-@app.route('/api_t_33/uploader', methods = ['GET','POST'])
-def upload_file_by_name():
+@app.route('/api_t_33/uploader/<num_par>', methods = ['GET','POST'])
+def upload_file_by_name(num_par):
     
     """
         Upload a file, return enriched dict of blocks.
@@ -113,18 +114,14 @@ def upload_file_by_name():
           - application/json
         parameters:
           - in: formData
-            name: upfile
+            name: file
             type: file
             description: The file to upload.
-            required: true   
-          - in: formData
-            name: numParagraph
-            type: object
-            properties:
-              numParagraph: 
-                type: integer 
-            description: Number of paragraphs
-            required: true    
+            required: true      
+          - in: path
+            name: num_par 
+            type: number
+            description: Number of paragraph
         responses:
           200:
             description: Application run normally
@@ -168,33 +165,43 @@ def upload_file_by_name():
     path = os.getcwd()+'/output/'
     if request.method == 'POST':
         try:
-            f = request.files['file']
+            f = request.files['file']       
             head, tail = os.path.split(f.filename)
             complex_name = str(time.time())+tail
             f.save(path+complex_name)
         except:
             return json.dumps({'content': {}, 'error' : server_errors['705'] }), 500, {'Content-Type': 'application/json; charset=utf-8'}      
-        try:         
-            input_json = json.load(request.files['data'])  
-            num_paragraph = input_json.get('numParagraph')
-        except:
+   
+        
+	if len(num_par)==0: 
             num_paragraph = config_parameters['numParsedBlocks']
+        else:
+            num_paragraph = num_par
 
-        data = {'documentName':path+complex_name, 'numParagraph': num_paragraph}
-      
+        
+        data = {'documentName':path+complex_name, 'numParagraph': int(num_paragraph)}
+     
+	  
+
         output = start_process(data)
         prettify_enriched_paragraphs = json.loads(output[0]).get('content')
-      
-        #remove files 
+     
+	#remove files 
         try:   
             os.remove(path+complex_name)     
         except OSError:
             print ("Error: file txt not found")  
-    else:
+  
+
+    elif request.method =='GET':
        prettify_enriched_paragraphs = {}
 
     return json.dumps({'content': prettify_enriched_paragraphs, 'error': server_errors["600"] }), 200, {'Content-Type': 'application/json; charset=utf-8'}
     #return json.dumps({'content': {'enrichedParagraphs':enriched_paragraphs}, 'error': server_errors["600"] }), 200, {'Content-Type': 'application/json; charset=utf-8'}
+
+
+
+
 
 def start_process(content = None):
     """
@@ -256,6 +263,7 @@ def start_process(content = None):
         json_input = request.get_json(force=True)
     else:
         json_input = content	
+
 
     # check validity of input json
     if isinstance(json_input, dict) == False:  
