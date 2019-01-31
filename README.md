@@ -70,7 +70,7 @@ sudo docker run [net][name][ip][port][container][entrypoint]
 
 ## How to use
 The platform comes with a set of micrososervices that are internally called by a unique entrypoint (/uploader). Therefore, altohugh all microservices have been documented, only the `/uploader` endpoint is responsible of making 
-the whole workflow running. In particular, "/enrich" service format the output of enpoint workflow according to OpenReq ontology. 
+the whole workflow running. In particular, "/prettify" service format the output of enpoint workflow according to OpenReq ontology. 
 Therefore, the Microservice has one entrypoint at the position:
 `http://217.172.12.199:10602/api_7_33/upoader`
 
