@@ -614,24 +614,20 @@ paths:
                 type: object
             type: object
       summary: Get entities types.
-  /api_t_33/uploader:
+  '/api_t_33/uploader/{num_par}':
     get:
       consumes:
         - multipart/form-data
       parameters:
         - description: The file to upload.
           in: formData
-          name: upfile
+          name: file
           required: true
           type: file
-        - description: Number of paragraphs
-          in: formData
-          name: numParagraph
-          properties:
-            numParagraph:
-              type: integer
-          required: true
-          type: object
+        - description: Number of paragraph
+          in: path
+          name: num_par
+          type: number
       produces:
         - application/json
       responses:
@@ -676,17 +672,13 @@ paths:
       parameters:
         - description: The file to upload.
           in: formData
-          name: upfile
+          name: file
           required: true
           type: file
-        - description: Number of paragraphs
-          in: formData
-          name: numParagraph
-          properties:
-            numParagraph:
-              type: integer
-          required: true
-          type: object
+        - description: Number of paragraph.
+          in: path
+          name: num_par
+          type: number
       produces:
         - application/json
       responses:
