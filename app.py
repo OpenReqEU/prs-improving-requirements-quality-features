@@ -121,6 +121,7 @@ def upload_file_by_name(num_par):
           - in: path
             name: num_par 
             type: number
+            required: true
             description: Number of paragraph
         responses:
           200:

@@ -79,10 +79,10 @@ with the following code:
 ```
 files = [('file', (filename, open(filename, 'rb'), 'application/octet'))]
   
-response = requests.post("http://217.172.12.199:10602/api_t_33/upoader/15", files=files)`
+response = requests.post("http://217.172.12.199:10602/api_t_33/upolader/num_par", files=files)`
 ```
 
-being filename the name of the file to be uploaded. The user should pass a document and the number of sub-blocks that should be parsed (each sub block may be represented by a title, a list of paragraph and so on).
+being filename the name of the file to be uploaded and num_par the number of paragraph. The user should pass a document and the number of sub-blocks that should be parsed (each sub block may be represented by a title, a list of paragraph and so on).
 The full processing stage may require several minutes, depending on the infrastructure performance and the size of the document to be uploaded. No GUI is provided (a json-like output is provided, according to OpenReq Ontology). 
 The output is compliant to OpenReq JSON structure.
 
