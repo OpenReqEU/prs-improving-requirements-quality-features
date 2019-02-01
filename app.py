@@ -31,6 +31,25 @@ app = Flask(__name__)
 swagger = Swagger(app)
 cors = CORS(app)
 
+
+Swagger.DEFAULT_CONFIG = {
+    "headers": [
+    ],
+    "specs": [
+        {
+            "endpoint": 'apispec_1',
+            "route": '/prs-improving-requirements-quality-features/apispec_1.json',
+            "rule_filter": lambda rule: True,  # all in
+            "model_filter": lambda tag: True,  # all in
+        }
+    ],
+    "static_url_path": "/prs-improving-requirements-quality-features/flasgger_static",
+    # "static_folder": "static",  # must be set by user
+    "swagger_ui": True,
+    "specs_route": "/prs-improving-requirements-quality-features/apidocs/"
+}
+
+
 @app.before_first_request
 def load_data():
 
@@ -102,7 +121,7 @@ def load_data():
 ###########################
 #####  Orchestrator #######
 ###########################
-@app.route('/api_t_33/uploader/<num_par>', methods = ['GET','POST'])
+@app.route('/prs-improving-requirements-quality-features/uploader/<num_par>', methods = ['GET','POST'])
 def upload_file_by_name(num_par):
     
     """
@@ -332,7 +351,7 @@ def start_process(content = None):
 ################################################
 
 ### Step 1
-@app.route('/api_t_33/parsing/conversion/doc', methods=['POST']) 
+@app.route('/prs-improving-requirements-quality-features/parsing/conversion/doc', methods=['POST']) 
 def convert_document(filename = None):
 	
     """
@@ -415,7 +434,7 @@ def convert_document(filename = None):
 
 
 ### Step 2
-@app.route('/api_t_33/parsing/segmentation', methods=['POST']) 
+@app.route('/prs-improving-requirements-quality-features/parsing/segmentation', methods=['POST']) 
 def text_segmentation(content = None, data = None):
 
     
@@ -526,7 +545,7 @@ def text_segmentation(content = None, data = None):
  
 
 ### Step 3   
-@app.route('/api_t_33/parsing/to_dict', methods=['POST'])    
+@app.route('/prs-improving-requirements-quality-features/parsing/to_dict', methods=['POST'])    
 def json_to_dict(content = None):
 
     """
@@ -622,7 +641,7 @@ def json_to_dict(content = None):
  
 
 ### Step 4
-@app.route("/api_t_33/parsing/enrich", methods=['POST'])
+@app.route("/prs-improving-requirements-quality-features/parsing/enrich", methods=['POST'])
 def enricher(content = None):
    
     """
@@ -726,7 +745,7 @@ def enricher(content = None):
 
 
 ### Step 5
-@app.route('/api_t_33/parsing/enrich/prettify', methods=['POST'])      
+@app.route('/prs-improving-requirements-quality-features/parsing/enrich/prettify', methods=['POST'])      
 def get_output_json(content = None):
 
 
@@ -832,7 +851,7 @@ def get_output_json(content = None):
 ################################################
 #1
 # lemmatizer app
-@app.route('/api_t_33/parsing/lemmatizer/<string:extr_type>', methods=['POST'])
+@app.route('/prs-improving-requirements-quality-features/parsing/lemmatizer/<string:extr_type>', methods=['POST'])
 def parsing_lemmatizer(extr_type=None):
 
 
@@ -953,7 +972,7 @@ def parsing_lemmatizer(extr_type=None):
 
 #2
 # supervised keyords extraction app
-@app.route('/api_t_33/parsing/keywords/supervised/<string:extr_type>', methods=['POST'])
+@app.route('/prs-improving-requirements-quality-features/parsing/keywords/supervised/<string:extr_type>', methods=['POST'])
 def parsing_db_entities_extraction(extr_type = None):
 
     """
@@ -1092,7 +1111,7 @@ def parsing_db_entities_extraction(extr_type = None):
 
 #3
 #dbpedia entities type app
-@app.route('/api_t_33/parsing/types', methods=['POST'])
+@app.route('/prs-improving-requirements-quality-features/parsing/types', methods=['POST'])
 def parsing_db_entity_types():
 
     """
@@ -1179,7 +1198,7 @@ def parsing_db_entity_types():
 
 #5
 # extract features app
-@app.route('/api_t_33/parsing/features', methods=['POST'])
+@app.route('/prs-improving-requirements-quality-features/parsing/features', methods=['POST'])
 def parsing_extract_features():
 
     """
@@ -1262,7 +1281,7 @@ def parsing_extract_features():
 
 #6
 #formal get structure app
-@app.route('/api_t_33/parsing/structure', methods=['POST'])
+@app.route('/prs-improving-requirements-quality-features/parsing/structure', methods=['POST'])
 def parsing_paragraph_structure():
 
     """
@@ -1343,7 +1362,7 @@ def parsing_paragraph_structure():
 
 #7
 #formal metrics app
-@app.route('/api_t_33/parsing/metrics', methods=['POST'])
+@app.route('/prs-improving-requirements-quality-features/parsing/metrics', methods=['POST'])
 def parsing_formal_metrics():
 
     """

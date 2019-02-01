@@ -38,7 +38,7 @@
         "DBpediaSpotlight": "http://localhost:42001/rest/annotate", 
         "uke": "/keywords/unsupervised/regex"
     }, 
-    "baseAddress": "http://localhost:5008/api_t_33", 
+    "baseAddress": "http://localhost:5008/prs-improving-requirements-quality-features", 
     "numParsedBlocks" : 16,
     "spacyModels": {
         "en": "en"

@@ -37,11 +37,18 @@ filename2 = path2+file_word2
 
 baseAddress = "http://127.0.0.1:10602"
 
-endpoint1 =  "/api_t_33/parsing/conversion/doc"
-endpoint2 =  "/api_t_33/parsing/segmentation"
-endpoint3 =  "/api_t_33/parsing/to_dict"
-endpoint4 =  "/api_t_33/parsing/enrich"
-endpoint5 =  "/api_t_33/parsing/enrich/prettify"
+#endpoint1 =  "/api_t_33/parsing/conversion/doc"
+#endpoint2 =  "/api_t_33/parsing/segmentation"
+#endpoint3 =  "/api_t_33/parsing/to_dict"
+#endpoint4 =  "/api_t_33/parsing/enrich"
+#endpoint5 =  "/api_t_33/parsing/enrich/prettify"
+
+endpoint1 =  "/prs-improving-requirements-quality-features/parsing/conversion/doc"
+endpoint2 =  "/prs-improving-requirements-quality-features/parsing/segmentation"
+endpoint3 =  "/prs-improving-requirements-quality-features/parsing/to_dict"
+endpoint4 =  "/prs-improving-requirements-quality-features/parsing/enrich"
+endpoint5 =  "/prs-improving-requirements-quality-features/parsing/enrich/prettify"
+
 
 #%%#########################################################
 ################    Test    ################################  

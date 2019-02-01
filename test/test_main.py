@@ -25,7 +25,7 @@ import os
 ################ Input data ################################  
 ############################################################
 #endpoint =  "http://127.0.0.1:10602/api_t_33/uploader/15"
-endpoint = "http://217.172.12.199:10602/api_t_33/uploader/15"
+endpoint = "http://217.172.12.199:10602/prs-improving-requirements-quality-features/uploader/15"
 
 
 

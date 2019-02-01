@@ -57,7 +57,7 @@ print (text )
 print ('---------------------------')
 print ('lemmatizer')
 data = {'documents' : [text]}
-out = tester_app(endpoint='api_t_33/parsing/lemmatizer/en',baseAddress=baseAddress, data=data)
+out = tester_app(endpoint='prs-improving-requirements-quality-features/parsing/lemmatizer/en',baseAddress=baseAddress, data=data)
 
 assert out['content']['lemmatizedDocuments'] != [] 
 print(out)
@@ -66,7 +66,7 @@ print(out)
 print ('---------------------------')
 print ('dbpedia entities')
 data = {'document' : text}
-out = tester_app(endpoint='api_t_33/parsing/keywords/supervised/en',baseAddress=baseAddress, data=data)
+out = tester_app(endpoint='prs-improving-requirements-quality-features/parsing/keywords/supervised/en',baseAddress=baseAddress, data=data)
 
 assert isinstance(out['content'], dict)
 assert 'dbpediaUri' and 'dbpediaEntities' in out['content'].keys()
@@ -83,7 +83,7 @@ print ('---------------------------')
 print ('dbpedia entity types')
 list_of_entities =  [u'Monodontidae', u'Physeteridae']
 data = { 'listOfEntities': list_of_entities}
-out = tester_app(endpoint='api_t_33/parsing/types',baseAddress=baseAddress, data=data)
+out = tester_app(endpoint='prs-improving-requirements-quality-features/parsing/types',baseAddress=baseAddress, data=data)
 assert isinstance(out['content'], dict)
 assert len(out['content']['typeDict'].keys()) == len(list_of_entities)
 
@@ -97,7 +97,7 @@ print (out)
 print ('---------------------------------------')
 print ("features:")
 data = {'document': text}
-out = tester_app(endpoint='api_t_33/parsing/features',baseAddress=baseAddress, data=data)
+out = tester_app(endpoint='prs-improving-requirements-quality-features/parsing/features',baseAddress=baseAddress, data=data)
 expected_out = {'featuresDict' : {u'will be': 0, u'is planned': 0, u'is envisaged': 0, u"it's planned": 0, u"it's foreseen": 0, u'is foreseen': 0, u'following': 0}, u'error': {u'status': 600, u'code': u'OK', u'description': u'Application run normally.'}}
 if isinstance(out['content'], dict): 
     assert isinstance(out['content'], dict) == isinstance(expected_out['featuresDict'], dict) 
@@ -115,7 +115,7 @@ print (out)
 print ('---------------------------------------')
 print ("structure:")
 data = { 'document': text}
-out = tester_app(endpoint='api_t_33/parsing/structure',baseAddress=baseAddress, data=data)
+out = tester_app(endpoint='prs-improving-requirements-quality-features/parsing/structure',baseAddress=baseAddress, data=data)
 
 expected_data = {'paragraphDict' : [
    {u'adjectives': [],
@@ -138,7 +138,7 @@ print (out)
 
 print ('---------------------------------------')
 print ("metrics:")
-out = tester_app(endpoint='api_t_33/parsing/metrics',baseAddress=baseAddress, data=data)
+out = tester_app(endpoint='prs-improving-requirements-quality-features/parsing/metrics',baseAddress=baseAddress, data=data)
 
 assert isinstance(out['content']['dictMetrics'], dict) and len(out['content']['dictMetrics']) == 2
 

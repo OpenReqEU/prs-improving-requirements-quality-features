@@ -72,14 +72,14 @@ sudo docker run [net][name][ip][port][container][entrypoint]
 The platform comes with a set of micrososervices that are internally called by a unique entrypoint (/uploader). Therefore, altohugh all microservices have been documented, only the `/uploader` endpoint is responsible of making 
 the whole workflow running. In particular, "/prettify" service format the output of enpoint workflow according to OpenReq ontology. 
 Therefore, the Microservice has one entrypoint at the position:
-`http://217.172.12.199:10602/api_t_33/uploader`
+`http://217.172.12.199:10602/prs-improving-requirements-quality-features/uploader`
 
 with the following code:
 
 ```
 files = [('file', (filename, open(filename, 'rb'), 'application/octet'))]
   
-response = requests.post("http://217.172.12.199:10602/api_t_33/upolader/num_par", files=files)`
+response = requests.post("http://217.172.12.199:10602/prs-improving-requirements-quality-features/upolader/num_par", files=files)`
 ```
 
 being filename the name of the file to be uploaded and num_par the number of paragraph. The user should pass a document and the number of sub-blocks that should be parsed (each sub block may be represented by a title, a list of paragraph and so on).
