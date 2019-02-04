@@ -201,7 +201,7 @@ paths:
                 type: object
             type: object
       summary: Extract features.
-  /prs-improving-requirements-quality-features/parsing/keywords/supervised/{extr_type}:
+  '/prs-improving-requirements-quality-features/parsing/keywords/supervised/{extr_type}':
     post:
       description: 'Get a text, return dbpedia entities.<br/>'
       parameters:
@@ -275,7 +275,7 @@ paths:
                 type: object
             type: object
       summary: DbPedia entities extraction.
-  /prs-improving-requirements-quality-features/parsing/lemmatizer/{extr_type}:
+  '/prs-improving-requirements-quality-features/parsing/lemmatizer/{extr_type}':
     post:
       description: 'Get a list of text, return a list of lemmatized text.<br/>'
       parameters:
@@ -614,7 +614,7 @@ paths:
                 type: object
             type: object
       summary: Get entities types.
-  /prs-improving-requirements-quality-features/uploader/{num_par}:
+  '/prs-improving-requirements-quality-features/uploader/{num_par}':
     get:
       consumes:
         - multipart/form-data
@@ -627,6 +627,7 @@ paths:
         - description: Number of paragraph
           in: path
           name: num_par
+          required: true
           type: number
       produces:
         - application/json
@@ -675,9 +676,10 @@ paths:
           name: file
           required: true
           type: file
-        - description: Number of paragraph.
+        - description: Number of paragraph
           in: path
           name: num_par
+          required: true
           type: number
       produces:
         - application/json
