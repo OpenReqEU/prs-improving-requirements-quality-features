@@ -1,0 +1,1131 @@
+{
+  "definitions": {}, 
+  "info": {
+    "description": "powered by Flasgger", 
+    "termsOfService": "/tos", 
+    "title": "A swagger API", 
+    "version": "0.0.1"
+  }, 
+  "paths": {
+    "/prs-improving-requirements-quality-features/parsing/conversion/doc": {
+      "post": {
+        "consumes": [
+          "multipart/form-data"
+        ], 
+        "description": "Get a document name, return parsed text.<br/>", 
+        "parameters": [
+          {
+            "description": "The file to upload.", 
+            "in": "formData", 
+            "name": "upfile", 
+            "required": true, 
+            "type": "file"
+          }
+        ], 
+        "produces": [
+          "application/json"
+        ], 
+        "responses": {
+          "200": {
+            "description": "Application run normally", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }, 
+          "500": {
+            "description": "Internal Server Error", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        }, 
+        "summary": "Parse document with tika"
+      }
+    }, 
+    "/prs-improving-requirements-quality-features/parsing/enrich": {
+      "post": {
+        "description": "Get a text, return an enriched dict.<br/>", 
+        "parameters": [
+          {
+            "in": "body", 
+            "name": "body", 
+            "required": true, 
+            "schema": {
+              "properties": {
+                "structuredDictList": {
+                  "items": {
+                    "type": "object"
+                  }, 
+                  "type": "array"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "Application run normally", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "items": {
+                    "type": "object"
+                  }, 
+                  "type": "array"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }, 
+          "500": {
+            "description": "Internal Server Error", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        }, 
+        "summary": "Enricher."
+      }
+    }, 
+    "/prs-improving-requirements-quality-features/parsing/enrich/prettify": {
+      "post": {
+        "description": "Get a list of enriched dict, return a list of pretty enriched dict.<br/>", 
+        "parameters": [
+          {
+            "in": "body", 
+            "name": "body", 
+            "required": true, 
+            "schema": {
+              "properties": {
+                "enrichedDictList": {
+                  "items": {
+                    "type": "object"
+                  }, 
+                  "type": "array"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "Application run normally", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "items": {
+                    "type": "object"
+                  }, 
+                  "type": "array"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }, 
+          "500": {
+            "description": "Internal Server Error", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        }, 
+        "summary": "Prettify enriched dict"
+      }
+    }, 
+    "/prs-improving-requirements-quality-features/parsing/features": {
+      "post": {
+        "description": "Get a text, return a list of dict with structured paragraph.<br/>", 
+        "parameters": [
+          {
+            "in": "body", 
+            "name": "body", 
+            "required": true, 
+            "schema": {
+              "properties": {
+                "document": {
+                  "type": "string"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "Application run normally", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "properties": {
+                    "featuresDict": {
+                      "type": "object"
+                    }
+                  }, 
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }, 
+          "500": {
+            "description": "Internal Server Error", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        }, 
+        "summary": "Extract features."
+      }
+    }, 
+    "/prs-improving-requirements-quality-features/parsing/keywords/supervised/{extr_type}": {
+      "post": {
+        "description": "Get a text, return dbpedia entities.<br/>", 
+        "parameters": [
+          {
+            "description": "Language en for english or it for italian.", 
+            "in": "path", 
+            "name": "extr_type", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }, 
+          {
+            "in": "body", 
+            "name": "body", 
+            "required": true, 
+            "schema": {
+              "properties": {
+                "confidence": {
+                  "type": "number"
+                }, 
+                "customEntities": {
+                  "items": {
+                    "type": "string"
+                  }, 
+                  "type": "array"
+                }, 
+                "document": {
+                  "description": "Parsed Text", 
+                  "type": "string"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "Application run normally", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "properties": {
+                    "dbpediaEntities": {
+                      "items": {
+                        "type": "string"
+                      }, 
+                      "type": "array"
+                    }, 
+                    "dbpediaUri": {
+                      "items": {
+                        "type": "string"
+                      }, 
+                      "type": "array"
+                    }, 
+                    "normalizedDocument": {
+                      "type": "string"
+                    }, 
+                    "patternMatching": {
+                      "items": {
+                        "type": "string"
+                      }, 
+                      "type": "array"
+                    }
+                  }, 
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }, 
+          "500": {
+            "description": "Internal Server Error", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        }, 
+        "summary": "DbPedia entities extraction."
+      }
+    }, 
+    "/prs-improving-requirements-quality-features/parsing/lemmatizer/{extr_type}": {
+      "post": {
+        "description": "Get a list of text, return a list of lemmatized text.<br/>", 
+        "parameters": [
+          {
+            "description": "Language en for english or it for italian.", 
+            "in": "path", 
+            "name": "extr_type", 
+            "required": true, 
+            "schema": {
+              "type": "string"
+            }
+          }, 
+          {
+            "in": "body", 
+            "name": "body", 
+            "required": true, 
+            "schema": {
+              "properties": {
+                "documents": {
+                  "items": {
+                    "type": "string"
+                  }, 
+                  "type": "array"
+                }, 
+                "removeStopwords": {
+                  "items": {
+                    "type": "string"
+                  }, 
+                  "type": "array"
+                }, 
+                "selectedPOS": {
+                  "items": {
+                    "type": "string"
+                  }, 
+                  "type": "array"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "Application run normally", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "properties": {
+                    "lemmatizedDocuments": {
+                      "items": {
+                        "items": {
+                          "type": "string"
+                        }, 
+                        "type": "array"
+                      }, 
+                      "type": "array"
+                    }
+                  }, 
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }, 
+          "500": {
+            "description": "Internal Server Error", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        }, 
+        "summary": "Text lemmatization."
+      }
+    }, 
+    "/prs-improving-requirements-quality-features/parsing/metrics": {
+      "post": {
+        "description": "Get a text, return a dict with ease and kincaid metric.<br/>", 
+        "parameters": [
+          {
+            "in": "body", 
+            "name": "body", 
+            "required": true, 
+            "schema": {
+              "properties": {
+                "document": {
+                  "description": "Parsed Text", 
+                  "type": "string"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "Application run normally", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "properties": {
+                    "dictMetrics": {
+                      "properties": {
+                        "ease": {
+                          "type": "number"
+                        }, 
+                        "kincaid": {
+                          "type": "number"
+                        }
+                      }, 
+                      "type": "object"
+                    }
+                  }, 
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }, 
+          "500": {
+            "description": "Internal Server Error", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        }, 
+        "summary": "Calculate metrics of parsed text"
+      }
+    }, 
+    "/prs-improving-requirements-quality-features/parsing/segmentation": {
+      "post": {
+        "consumes": [
+          "multipart/form-data"
+        ], 
+        "description": "Get a document name, return segmented text.<br/>", 
+        "parameters": [
+          {
+            "description": "The file to upload.", 
+            "in": "formData", 
+            "name": "file", 
+            "required": true, 
+            "type": "file"
+          }, 
+          {
+            "description": "Number of paragraphs", 
+            "in": "formData", 
+            "name": "numParagraph", 
+            "properties": {
+              "numParagraph": {
+                "type": "integer"
+              }
+            }, 
+            "required": true, 
+            "type": "object"
+          }
+        ], 
+        "produces": [
+          "application/json"
+        ], 
+        "responses": {
+          "200": {
+            "description": "Application run normally", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "items": {
+                    "type": "object"
+                  }, 
+                  "type": "array"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }, 
+          "500": {
+            "description": "Internal Server Error", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        }, 
+        "summary": "Text Segmentation"
+      }
+    }, 
+    "/prs-improving-requirements-quality-features/parsing/structure": {
+      "post": {
+        "description": "Get a text, return a dict with structure.<br/>", 
+        "parameters": [
+          {
+            "in": "body", 
+            "name": "body", 
+            "required": true, 
+            "schema": {
+              "properties": {
+                "document": {
+                  "description": "Parsed Text", 
+                  "type": "string"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "Application run normally", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "properties": {
+                    "paragraphDict": {
+                      "items": {
+                        "type": "object"
+                      }, 
+                      "type": "array"
+                    }
+                  }, 
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }, 
+          "500": {
+            "description": "Internal Server Error", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        }, 
+        "summary": "Document Structure"
+      }
+    }, 
+    "/prs-improving-requirements-quality-features/parsing/to_dict": {
+      "post": {
+        "description": "Get a a list of blocks, return list of structered dict.<br/>", 
+        "parameters": [
+          {
+            "in": "body", 
+            "name": "body", 
+            "required": true, 
+            "schema": {
+              "properties": {
+                "listOfBlocks": {
+                  "items": {
+                    "type": "object"
+                  }, 
+                  "type": "array"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "Application run normally", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "items": {
+                    "type": "object"
+                  }, 
+                  "type": "array"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }, 
+          "500": {
+            "description": "Internal Server Error", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        }, 
+        "summary": "From json to a structered dict."
+      }
+    }, 
+    "/prs-improving-requirements-quality-features/parsing/types": {
+      "post": {
+        "description": "Get a list of entities, return a dict<br/>", 
+        "parameters": [
+          {
+            "in": "body", 
+            "name": "body", 
+            "required": true, 
+            "schema": {
+              "properties": {
+                "listOfEntities": {
+                  "items": {
+                    "type": "string"
+                  }, 
+                  "type": "array"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "Application run normally", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "properties": {
+                    "typeDict": {
+                      "properties": {
+                        "entity i": {
+                          "items": {
+                            "type": "string"
+                          }, 
+                          "type": "array"
+                        }
+                      }, 
+                      "type": "object"
+                    }
+                  }, 
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }, 
+          "500": {
+            "description": "Internal Server Error", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        }, 
+        "summary": "Get entities types."
+      }
+    }, 
+    "/prs-improving-requirements-quality-features/uploader/{num_par}": {
+      "get": {
+        "consumes": [
+          "multipart/form-data"
+        ], 
+        "parameters": [
+          {
+            "description": "The file to upload.", 
+            "in": "formData", 
+            "name": "file", 
+            "required": true, 
+            "type": "file"
+          }, 
+          {
+            "description": "Number of paragraph", 
+            "in": "path", 
+            "name": "num_par", 
+            "required": true, 
+            "type": "number"
+          }
+        ], 
+        "produces": [
+          "application/json"
+        ], 
+        "responses": {
+          "200": {
+            "description": "Application run normally", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "items": {
+                    "type": "object"
+                  }, 
+                  "type": "array"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }, 
+          "500": {
+            "description": "Internal Server Error", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        }, 
+        "summary": "Upload a file, return enriched dict of blocks."
+      }, 
+      "post": {
+        "consumes": [
+          "multipart/form-data"
+        ], 
+        "parameters": [
+          {
+            "description": "The file to upload.", 
+            "in": "formData", 
+            "name": "file", 
+            "required": true, 
+            "type": "file"
+          }, 
+          {
+            "description": "Number of paragraph", 
+            "in": "path", 
+            "name": "num_par", 
+            "required": true, 
+            "type": "number"
+          }
+        ], 
+        "produces": [
+          "application/json"
+        ], 
+        "responses": {
+          "200": {
+            "description": "Application run normally", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "items": {
+                    "type": "object"
+                  }, 
+                  "type": "array"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }, 
+          "500": {
+            "description": "Internal Server Error", 
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "object"
+                }, 
+                "error": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    }, 
+                    "description": {
+                      "type": "string"
+                    }, 
+                    "status": {
+                      "type": "number"
+                    }
+                  }, 
+                  "type": "object"
+                }
+              }, 
+              "type": "object"
+            }
+          }
+        }, 
+        "summary": "Upload a file, return enriched dict of blocks."
+      }
+    }
+  }, 
+  "swagger": "2.0"
+}
