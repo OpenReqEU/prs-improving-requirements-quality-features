@@ -103,5 +103,5 @@ e.g. from "http://localhost:42001/rest/annotate", " to "http://172.31.37.91:1111
 See OpenReq project contribution link: [guidelines](https://github.com/OpenReqEU/OpenReq/blob/master/CONTRIBUTING.md)
 
 ## License
-Free use of this software is granted under the terms of the EPL version 2 (EPL2.0).
+Free use of this software is granted under the terms of the EPL version 2 ([EPL2.0](https://www.eclipse.org/legal/epl-2.0/)).
 
