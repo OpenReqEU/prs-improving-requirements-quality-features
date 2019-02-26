@@ -72,20 +72,17 @@ sudo docker run [net][name][ip][port][container][entrypoint]
 The platform comes with a set of micrososervices that are internally called by a unique entrypoint (/uploader). Therefore, altohugh all microservices have been documented, only the `/uploader` endpoint is responsible of making 
 the whole workflow running. In particular, "/prettify" service format the output of enpoint workflow according to OpenReq ontology. 
 Therefore, the Microservice has one entrypoint at the position:
-`http://217.172.12.199:10602/api_7_33/upoader`
+`http://217.172.12.199:10602/prs-improving-requirements-quality-features/uploader`
 
 with the following code:
 
 ```
-data = {'numParagraph':15}
-files = [
-    ('file', (filename, open(filename, 'rb'), 'application/octet')),
-    ('data', ('data', json.dumps(data), 'application/json'))
-]
-response = requests.post("http://217.172.12.199:10602/api_7_33/upoader", files=files)`
+files = [('file', (filename, open(filename, 'rb'), 'application/octet'))]
+  
+response = requests.post("http://217.172.12.199:10602/prs-improving-requirements-quality-features/upolader/num_par", files=files)`
 ```
 
-being filename the name of the file to be uploaded. The user should pass a document and the number of sub-blocks that should be parsed (each sub block may be represented by a title, a list of paragraph and so on).
+being filename the name of the file to be uploaded and num_par the number of paragraph. The user should pass a document and the number of sub-blocks that should be parsed (each sub block may be represented by a title, a list of paragraph and so on).
 The full processing stage may require several minutes, depending on the infrastructure performance and the size of the document to be uploaded. No GUI is provided (a json-like output is provided, according to OpenReq Ontology). 
 The output is compliant to OpenReq JSON structure.
 

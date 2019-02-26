@@ -5,7 +5,7 @@ info:
   title: A swagger API
   version: 0.0.1
 paths:
-  /api_t_33/parsing/conversion/doc:
+  /prs-improving-requirements-quality-features/parsing/conversion/doc:
     post:
       consumes:
         - multipart/form-data
@@ -52,7 +52,7 @@ paths:
                 type: object
             type: object
       summary: Parse document with tika
-  /api_t_33/parsing/enrich:
+  /prs-improving-requirements-quality-features/parsing/enrich:
     post:
       description: 'Get a text, return an enriched dict.<br/>'
       parameters:
@@ -102,7 +102,7 @@ paths:
                 type: object
             type: object
       summary: Enricher.
-  /api_t_33/parsing/enrich/prettify:
+  /prs-improving-requirements-quality-features/parsing/enrich/prettify:
     post:
       description: 'Get a list of enriched dict, return a list of pretty enriched dict.<br/>'
       parameters:
@@ -152,7 +152,7 @@ paths:
                 type: object
             type: object
       summary: Prettify enriched dict
-  /api_t_33/parsing/features:
+  /prs-improving-requirements-quality-features/parsing/features:
     post:
       description: 'Get a text, return a list of dict with structured paragraph.<br/>'
       parameters:
@@ -201,7 +201,7 @@ paths:
                 type: object
             type: object
       summary: Extract features.
-  '/api_t_33/parsing/keywords/supervised/{extr_type}':
+  '/prs-improving-requirements-quality-features/parsing/keywords/supervised/{extr_type}':
     post:
       description: 'Get a text, return dbpedia entities.<br/>'
       parameters:
@@ -275,7 +275,7 @@ paths:
                 type: object
             type: object
       summary: DbPedia entities extraction.
-  '/api_t_33/parsing/lemmatizer/{extr_type}':
+  '/prs-improving-requirements-quality-features/parsing/lemmatizer/{extr_type}':
     post:
       description: 'Get a list of text, return a list of lemmatized text.<br/>'
       parameters:
@@ -344,7 +344,7 @@ paths:
                 type: object
             type: object
       summary: Text lemmatization.
-  /api_t_33/parsing/metrics:
+  /prs-improving-requirements-quality-features/parsing/metrics:
     post:
       description: 'Get a text, return a dict with ease and kincaid metric.<br/>'
       parameters:
@@ -399,7 +399,7 @@ paths:
                 type: object
             type: object
       summary: Calculate metrics of parsed text
-  /api_t_33/parsing/segmentation:
+  /prs-improving-requirements-quality-features/parsing/segmentation:
     post:
       consumes:
         - multipart/form-data
@@ -456,7 +456,7 @@ paths:
                 type: object
             type: object
       summary: Text Segmentation
-  /api_t_33/parsing/structure:
+  /prs-improving-requirements-quality-features/parsing/structure:
     post:
       description: 'Get a text, return a dict with structure.<br/>'
       parameters:
@@ -508,7 +508,7 @@ paths:
                 type: object
             type: object
       summary: Document Structure
-  /api_t_33/parsing/to_dict:
+  /prs-improving-requirements-quality-features/parsing/to_dict:
     post:
       description: 'Get a a list of blocks, return list of structered dict.<br/>'
       parameters:
@@ -558,7 +558,7 @@ paths:
                 type: object
             type: object
       summary: From json to a structered dict.
-  /api_t_33/parsing/types:
+  /prs-improving-requirements-quality-features/parsing/types:
     post:
       description: 'Get a list of entities, return a dict<br/>'
       parameters:
@@ -614,7 +614,7 @@ paths:
                 type: object
             type: object
       summary: Get entities types.
-  '/api_t_33/uploader/{num_par}':
+  '/prs-improving-requirements-quality-features/uploader/{num_par}':
     get:
       consumes:
         - multipart/form-data
@@ -627,6 +627,7 @@ paths:
         - description: Number of paragraph
           in: path
           name: num_par
+          required: true
           type: number
       produces:
         - application/json
@@ -675,9 +676,10 @@ paths:
           name: file
           required: true
           type: file
-        - description: Number of paragraph.
+        - description: Number of paragraph
           in: path
           name: num_par
+          required: true
           type: number
       produces:
         - application/json
