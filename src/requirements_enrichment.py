@@ -18,7 +18,7 @@ from patternmatcher import create_regex_pattern, pattern_matcher
 import requests
 from output_dbpedia import get_output_dbpedia
 
-from IPython import embed
+#from IPython import embed
 
 
 def dbpedia_entity_types(list_of_entities):
