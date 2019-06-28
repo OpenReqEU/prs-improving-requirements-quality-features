@@ -45,7 +45,7 @@ def extract_fields_from_input_dict(inner_dict):
         try:
             property_dictionary['content'] = inner_dict[el]
         except KeyError:
-            property_dictionary['content'] = inner_dict[el]
+            property_dictionary['content'] = []
 
         property_dictionary['created_at'] = int(time.time())
         list_of_dictionaries.append(property_dictionary)

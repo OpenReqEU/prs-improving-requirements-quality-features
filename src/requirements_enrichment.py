@@ -18,6 +18,7 @@ from patternmatcher import create_regex_pattern, pattern_matcher
 import requests
 from output_dbpedia import get_output_dbpedia
 
+from IPython import embed
 
 
 def dbpedia_entity_types(list_of_entities):
@@ -92,13 +93,14 @@ def dbpedia(element,tc_obj,param_dbpedia_dict):
 
 
 def enrich(element_dict, wordlist_list, verb_arguments_parser,lem_obj,tc_obj,param_dbpedia_dict):
+
     if 'Bullet' in element_dict.keys() or 'Paragraphs' in element_dict.keys(): 
         key = 'Bullet' if 'Bullet' in element_dict else 'Paragraphs'
         try:
             element_dict['lemmatizedContent'] = lemmatizer(element_dict[key],lem_obj)
         except:
             element_dict['lemmatizedContent'] =[]
-
+        '''
         try:
             element_dict['dbpediaEntities'] = dbpedia(element_dict[key],tc_obj,param_dbpedia_dict) 
         except:
@@ -108,7 +110,7 @@ def enrich(element_dict, wordlist_list, verb_arguments_parser,lem_obj,tc_obj,par
             element_dict['dbpediaEntitiesType'] = dbpedia_entity_types(element_dict['dbpediaEntities'])
         except: 
             element_dict['dbpediaEntitiesType'] = {}
-        
+        '''        
         for i in range(len(wordlist_list)):
             element_dict['d'+str(i)] = extract_features([element_dict[key]], wordlist_list[i])[0]
          
@@ -117,7 +119,6 @@ def enrich(element_dict, wordlist_list, verb_arguments_parser,lem_obj,tc_obj,par
             element_dict['formalMetrics'] = formal_metrics(element_dict[key])
         else:
             element_dict['formalMetrics'] = dict({ 'ease': None, 'kincaid': None })        
-
     return element_dict
         
 		

@@ -114,7 +114,7 @@ def load_data():
                   rm_hashtags = True, rm_tags = True, rm_urls = True, tolower=False,
                   rm_email=True, rm_html_tags = True) 
 
-     
+
 
 
 
@@ -284,7 +284,6 @@ def start_process(content = None):
     else:
         json_input = content	
 
-
     # check validity of input json
     if isinstance(json_input, dict) == False:  
         return json.dumps({'content': {}, 'error' : server_errors['707'] }), 500, {'Content-Type': 'application/json; charset=utf-8'} 
@@ -333,7 +332,7 @@ def start_process(content = None):
     #out_4 = requests.post(baseAddress + "/parsing/enrich", data=json.dumps(data))
     out_4 = enricher(data)
     enriched_paragraphs = json.loads(out_4[0]).get('content')
-    
+        
     # step 5
     #prettify enched dict    
     data = {'enrichedDictList': enriched_paragraphs}
