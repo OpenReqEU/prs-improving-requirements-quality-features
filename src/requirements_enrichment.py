@@ -100,7 +100,7 @@ def enrich(element_dict, wordlist_list, verb_arguments_parser,lem_obj,tc_obj,par
             element_dict['lemmatizedContent'] = lemmatizer(element_dict[key],lem_obj)
         except:
             element_dict['lemmatizedContent'] =[]
-        '''
+        
         try:
             element_dict['dbpediaEntities'] = dbpedia(element_dict[key],tc_obj,param_dbpedia_dict) 
         except:
@@ -110,7 +110,7 @@ def enrich(element_dict, wordlist_list, verb_arguments_parser,lem_obj,tc_obj,par
             element_dict['dbpediaEntitiesType'] = dbpedia_entity_types(element_dict['dbpediaEntities'])
         except: 
             element_dict['dbpediaEntitiesType'] = {}
-        '''        
+                
         for i in range(len(wordlist_list)):
             element_dict['d'+str(i)] = extract_features([element_dict[key]], wordlist_list[i])[0]
          
