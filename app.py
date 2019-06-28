@@ -25,7 +25,7 @@ import os
 import os.path
 import traceback
 import sys
-from IPython import embed
+#from IPython import embed
 #from werkzeug.utils import secure_filename
 app = Flask(__name__)
 swagger = Swagger(app)
