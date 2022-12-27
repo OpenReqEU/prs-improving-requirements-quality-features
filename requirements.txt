@@ -1,7 +1,7 @@
 pandas==0.22.0
 Pattern==2.6
 Flask_Cors==2.1.2
-setuptools==39.0.1
+setuptools==65.5.1
 Pyphen==0.9.4
 msgpack<0.6.0
 spacy==2.0.11
